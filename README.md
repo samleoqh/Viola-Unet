@@ -1,2 +1,2 @@
 # Viola-Unet
-Winner solution on validation set for the 2022 Intracranial Hemorrhage Segmentation Challenge (INSTANCE 2022)
+A description of the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge (INSTANCE 2022)
