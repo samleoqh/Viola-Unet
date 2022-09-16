@@ -1,6 +1,8 @@
 # Viola-Unet
 A description of the winning solution: [Viola-Unet](https://arxiv.org/abs/2208.06313) for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/))
 ---
+<img align="top" src="demo/125_0.923.gif" width="500"/> <img align="top" src="demo/105_0.881.gif" width="500"/>
+
 ## Test the pre-trained models in docker
 1. Download the docker image [crainet.tar.gz](https://e1.pcloud.link/publink/show?code=XZTBy4ZYwtUXUhrCk4QfIMQCiPHl7KneUzk)
 2. Prepare your input folder such as ```/home/yourname/Desktop/input``` (a folder contains all CT files for testing) will be synchronized with ```/input``` in the docker container, and output folder such as 
