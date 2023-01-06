@@ -10,7 +10,7 @@ A description of the winning solution: [Viola-Unet](https://arxiv.org/abs/2208.0
 3. Run the program with commands as follows (assuming on Linux OS)
 ```
 docker load < crainet.tar.gz
-docker run --gpus "device=0" -name crainetst -v /home/yourname/Desktop/input:/input -v /home/yourname/Desktop/predict:/predict crainet:latest
+docker run --gpus "device=0" --name crainetst -v /home/yourname/Desktop/input:/input -v /home/yourname/Desktop/predict:/predict crainet:latest
 ```
 4. The program will do following: first, read each CT file(```*.nii.gz```) in folder ```./input```, then, use pre-trained models (ensemble of viola-Unet and nnU-Net) to segment the CT scans one by one and save the segmented masks to ```./predict```. 
 
