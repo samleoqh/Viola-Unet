@@ -59,3 +59,15 @@ docker load -i crainet.tar.gz
 docker run --name crainetx -v D:\data\CT\test\input\:/input -v D:\data\CT\test\predict\:/predict crainet:latest
 ```
 just replace ```D:\data\CT\test\input\``` and ```D:\data\CT\test\predict\``` with your own folder path. 
+
+## Citation: 
+Please consider citing [our work](https://arxiv.org/abs/2208.06313) if you find the code helps you
+
+```
+@inproceedings{liu2023ICH,
+  title={Voxels Intersecting along Orthogonal Levels Attention U-Net for Intracerebral Haemorrhage Segmentation in Head CT},
+  author={Qinghui Liu and Bradley J MacIntosh and Till Schellhorn and Karoline Skogen and KyrreEeg Emblem and Atle Bjørnerud},
+  booktitle={Proceedings of ISBI 2023 IEEE 20th International Symposium on Biomedical Imaging (ISBI)},
+  year={2023}
+}
+```
