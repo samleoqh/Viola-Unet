@@ -1,1 +1,1 @@
-download the ckpt weigths from: https://e1.pcloud.link/publink/show?code=XZvni4Zp0gXoEGBlDhfQLTL6QEGm468l5hX 
+The next version of Viola is under development; please contact us directly for the pre-trained weights.
