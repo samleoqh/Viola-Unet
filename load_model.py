@@ -10,78 +10,43 @@ from viola_unet import ViolaUNet
 from monai.networks.nets import DynUNet
 
 
-wind_levels = [[0,100], [-15, 200],[-100, 1300]]
-spacing = [0.45100001*2, 0.45100001*2, 4.99709511] 
+wind_levels = [[15,85], [-15, 200],[-100, 1300]]
+spacing = [1., 1., 3.] 
 patch_size = (160, 160, 32)
-patch_overlap = 0.3 # 0.5 for last validation submission
+patch_overlap = 0.5 # 0.5 for last validation submission
 sw_bt_size=1
 
-# debug new setting
-# patch_size = (192, 192, 24)
-# patch_overlap = 0.75 # 0.5 for last validation submission
-
-
-# # # last validation submission weights
-# net_weights = {
-#     "ViolaUNet_l":{
-#         "kf0": "./best_ckpt1/viola/model_epoch_8640_dice_0.80106_lr_0.0000869017.pt",
-#         "kf1": "./best_ckpt1/viola/model_epoch_4656_dice_0.76015_lr_0.0019869438.pt",  # new ft 0.76887
-#         "kf2": "./best_ckpt1/viola/model_epoch_5940_dice_0.81959_lr_0.0000937899.pt",  # new ft 0.82135
-#         "kf3": "./best_ckpt1/viola/model_epoch_37728_dice_0.78699_lr_0.0033099166.pt", # new ft 0.78784
-#         "kf4": "./best_ckpt1/viola/model_epoch_12054_dice_0.78984_lr_0.0000753008.pt",
-#     },
-    
-#     "nnUNet":{
-#         "kf0": "./best_ckpt1/nnu/model_epoch_19296_dice_0.80530_lr_0.0042245472.pt",
-#         "kf1": "./best_ckpt1/nnu/model_epoch_38412_dice_0.76024_lr_0.0022887478.pt",  # ft new 0.76780
-#         "kf2": "./best_ckpt1/nnu/model_epoch_24651_dice_0.81655_lr_0.0037515006.pt", # ft new 0.81775
-#         "kf3": "./best_ckpt1/nnu/model_epoch_1152_dice_0.79311_lr_0.0049999435.pt", 
-#         "kf4": "./best_ckpt1/nnu/model_epoch_5292_dice_0.78911_lr_0.0049550524.pt",
-#     },
-# }
 
 
 # # re-fine-tuned version after the last validation submission weights
 net_weights = {
-    "ViolaUNet_l":{
-        "kf0": "./best_ckpt2/viola/model_epoch_8640_dice_0.80106_lr_0.0000869017.pt",
-        "kf1": "./best_ckpt2/viola/model_epoch_5820_dice_0.76887_lr_0.0029100000.pt",  # new ft 0.76887
-        "kf2": "./best_ckpt2/viola/model_epoch_297_dice_0.82135_lr_0.0001485000.pt",  # new ft 0.82135
-        "kf3": "./best_ckpt2/viola/model_epoch_288_dice_0.78784_lr_0.0001440000.pt", # new ft 0.78784
-        "kf4": "./best_ckpt2/viola/model_epoch_12054_dice_0.78984_lr_0.0000753008.pt",
-    },
-    
-    "nnUNet":{
-        "kf0": "./best_ckpt2/nnu/model_epoch_19296_dice_0.80530_lr_0.0042245472.pt",
-        "kf1": "./best_ckpt2/nnu/model_epoch_6693_dice_0.76780_lr_0.0033465000.pt",  # ft new 0.76780
-        "kf2": "./best_ckpt2/nnu/model_epoch_18414_dice_0.81775_lr_0.0047762088.pt", # ft new 0.81775
-        "kf3": "./best_ckpt2/nnu/model_epoch_1152_dice_0.79311_lr_0.0049999435.pt", 
-        "kf4": "./best_ckpt2/nnu/model_epoch_5292_dice_0.78911_lr_0.0049550524.pt",
-    },
+    "nnUNet": "./best_ckpt2/nnu_v2.pt",      # best 192x192x32
+    # "ViolaUNet_ss": "./viola2_ckpt/ss_f0.pt",      # best 160x32, 0.66
+    "Viola_s": "./best_ckpt2/viola_v2.pt",      # best 192x192x32
 }
 
 
-def load_model(network="ViolaUNet_l", kf="kf0", device='cpu', ckpt=True):
-    if network == "ViolaUNet_l":
+def load_model(network="Viola_s", device='cpu'):
+    if network == "Viola_s":
         model = ViolaUNet(
             spatial_dims=3,
             in_channels=3,
             out_channels=2,
-            kernel_size=[[3, 3, 1], [3, 3, 1], [3, 3, 1], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]],
-            strides=[[1, 1, 1], [2, 2, 1], [2, 2, 1], [2, 2, 2], [2, 2, 2], [2, 2, 1], [1, 1, 1]],
-            upsample_kernel_size=[[2, 2, 1], [2, 2, 1], [2, 2, 2], [2, 2, 2], [2, 2, 1], [1, 1, 1]],
-            filters=(32, 64, 96, 128, 192, 256, 320),
-            dec_filters=(32, 64, 96, 128, 192, 256),
+            kernel_size=[[3, 3, 1], [3, 3, 1], [3, 3, 3], [3, 3, 3], [3, 3, 3]],
+            strides=[[1, 1, 1], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]],
+            upsample_kernel_size=[[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]],
+            filters=(16, 32, 32, 64, 128),
+            dec_filters=(16, 16, 32, 64),
             norm_name=("BATCH", {"affine": True}),
             act_name=("leakyrelu", {"inplace": True, "negative_slope": 0.01}),
             dropout=0.2,
-            deep_supervision=True,
-            deep_supr_num=4,
-            res_block=True, 
+            deep_supervision=False,
+            deep_supr_num=2,
+            res_block=True,
             trans_bias=True,
-            viola_att = True,
-            gated_att = False,
-            sum_deep_supr = False,
+            viola_att=True,
+            gated_att=False,
+            sum_deep_supr=False,
         )
     elif network == 'nnUNet':
         model = DynUNet(
@@ -100,35 +65,16 @@ def load_model(network="ViolaUNet_l", kf="kf0", device='cpu', ckpt=True):
             res_block=True,
             trans_bias=True,
         )
-    # elif network == 'ViolaUNet_s': # for paper figure 1
-    #     model = ViolaUNet(
-    #         spatial_dims=3,
-    #         in_channels=3,
-    #         out_channels=2,
-    #         kernel_size=[[3, 3, 1], [3, 3, 1], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 1]],
-    #         strides=[[1, 1, 1], [2, 2, 1], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [1, 1, 1]],
-    #         upsample_kernel_size=[[2, 2, 1], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [1, 1, 1]],
-    #         filters=(32, 64, 96, 128, 192, 256, 320),
-    #         dec_filters=(32, 64, 96, 128, 128, 128),
-    #         norm_name=("BATCH", {"affine": True}),
-    #         act_name=("leakyrelu", {"inplace": True, "negative_slope": 0.01}),
-    #         dropout=0.2,
-    #         deep_supervision=True,
-    #         deep_supr_num=2,
-    #         res_block=False, 
-    #         trans_bias=True,
-    #         viola_att = True,
-    #         gated_att = False,
-    #         sum_deep_supr = False,
-    #     )
     else:
         print("Not support the network currently - ", network)
         return None
     
-    if ckpt and network != 'ViolaUNet_s':  # 
-        pretrain = torch.load(net_weights[network][kf], map_location=device)
-        model.load_state_dict(pretrain['state_dict'])
-        print("model {}-{} loaded successfully!".format(network, kf))
+    if net_weights[network] is not None:  # 
+        pretrain = torch.load(net_weights[network], map_location=device)
+        model.load_state_dict(pretrain)
+        print("model {} loaded successfully!".format(network))
+    else:
+        print("model {} loaded failure, couldn't find the trained weights!".format(network))
     return model.to(device)
 
 
@@ -180,7 +126,6 @@ def nibout(segmentation, outputpath, imagepath):
     """
     # print(outputpath)
     path, filename = os.path.split(imagepath)
-    print(filename)
     image = nib.load(imagepath)
     segmentation = nib.Nifti1Image(segmentation, image.affine)
     qform = image.get_qform()
@@ -188,6 +133,7 @@ def nibout(segmentation, outputpath, imagepath):
     sfrom = image.get_sform()
     segmentation.set_sform(sfrom)
     nib.save(segmentation, os.path.join(outputpath, filename))
+    print('Segmention was saved to file:', filename)
 
 
 # import time

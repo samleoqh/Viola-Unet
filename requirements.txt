@@ -1,14 +1,5 @@
-# numpy==1.17.5
-numpy==1.22.2
 # torch==1.11.0
-monai==0.9.0
-nibabel==3.2.2
-
-# # only for training
-# scipy==1.8.0
-# tqdm==4.63.0
-# tensorboardX==2.5
-# matplotlib==3.5.1
-# scikit_learn==1.0.2
-# einops==0.4.1
-# wandb==0.12.21
+monai==1.0.1
+nibabel
+numpy
+pandas

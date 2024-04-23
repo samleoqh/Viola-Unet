@@ -8,12 +8,10 @@ from monai.transforms import *
 from monai.data import Dataset, DataLoader
 
 
-
 pre_process = Compose(
     [
         LoadImaged(keys=["image"]),
-        AddChanneld(keys=["image"]),
-        Spacingd(keys=["image"], pixdim=spacing, mode=("bilinear")),
+        EnsureChannelFirstd(keys=["image"]),
         CopyItemsd(keys=["image"], times=2, names=["img_2", "img_3"]),
         ScaleIntensityRanged(
             keys=["image"], a_min=wind_levels[0][0], a_max=wind_levels[0][1],
@@ -30,13 +28,13 @@ pre_process = Compose(
         ConcatItemsd(['image', 'img_2', 'img_3'], name='image'),
         DeleteItemsd(['img_2', 'img_3']),
 
-        Orientationd(keys=["image"], axcodes="RAS"),  # RPI, RAS   # error using orientationd for case 8 and 3
+        
+        Spacingd(keys=["image"], pixdim=spacing, mode=("bilinear")),
         CropForegroundd(keys=["image"], source_key="image"),
-        NormalizeIntensityd(keys=["image"], nonzero=True, channel_wise=True), # only for Viola_xds_ model
-        # SpatialPadd(keys=["image"], spatial_size=patch_size),
-        CastToTyped(keys=["image"], dtype=(np.float32)),
+        Orientationd(keys=["image"], axcodes="RPI"),  # RPI, RAS   # error using orientationd for case 8 and 3
+        # CastToTyped(keys=["image"], dtype=(np.float32)),
         # EnsureTyped(keys=["image", "label"]),
-        ToTensord(keys=["image"]),
+        # ToTensord(keys=["image"]),
     ]
 )
 
@@ -56,11 +54,12 @@ post_process = Compose([
     ),
 ])
 
+
 # reading raw head information from input scans
 read_raw_image = Compose(
     [
         LoadImaged(keys=["image"]),
-        AddChanneld(keys=["image"]),
+        EnsureChannelFirstd(keys=["image"]),
         ScaleIntensityRanged(keys=["image"],
                              a_min=0, a_max=100,
                              b_min=0., b_max=1., clip=True),
