@@ -4,40 +4,31 @@ A description of the winning solution: [Viola-Unet](https://arxiv.org/abs/2208.0
 <img align="top" src="demo/125_0.923.gif" width="400"/> <img align="top" src="demo/105_0.881.gif" width="400"/>
 
 ## Test the pre-trained models in docker
-1. Download the docker image [crainet.tar.gz](https://e1.pcloud.link/publink/show?code=XZTBy4ZYwtUXUhrCk4QfIMQCiPHl7KneUzk)
+1. Download the docker image [viola_v2.tar.gz](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy)
 2. Prepare your input folder such as ```/home/yourname/Desktop/input``` (a folder contains all CT files for testing) will be synchronized with ```/input``` in the docker container, and output folder such as 
 ```/home/yourname/Desktop/predict``` (an empty folder used to save segmentation file) will be synchronized with ```/predict``` in the docker container. Note that, the filename of the segmentation mask file (```./predict```) is the same as the CT file (```./input```), the segmentation mask is a 3D zero-one array(0 stands for background, 1 stands for target), and the meta information of the segmentation mask file is consistent with that of original CT file (```*.nii.gz```). 
 3. Run the program with commands as follows (assuming on Linux OS) with outputing inference messages to stdout（```-e PYTHONUNBUFFERED=1```）
 ```
-docker load < crainet.tar.gz
-docker run --gpus "device=0" --name crainetx -e PYTHONUNBUFFERED=1 -v /home/yourname/Desktop/input:/input -v /home/yourname/Desktop/predict:/predict crainet:latest
+docker load < viola_v2.tar.gz
+docker run --gpus "device=0" --name viola -e PYTHONUNBUFFERED=1 -v /home/yourname/Desktop/input:/input -v /home/yourname/Desktop/predict:/predict viola_v2:latest
 ```
 4. The program will do following: first, read each CT file(```*.nii.gz```) in folder ```./input```, then, use pre-trained models (ensemble of viola-Unet and nnU-Net) to segment the CT scans one by one and save the segmented masks to ```./predict```, and output inference messages to terminal like: 
 ```
-model nnUNet-kf0 loaded successfully!
-model nnUNet-kf1 loaded successfully!
-model nnUNet-kf2 loaded successfully!
-model nnUNet-kf3 loaded successfully!
-model nnUNet-kf4 loaded successfully!
-model ViolaUNet_l-kf0 loaded successfully!
-model ViolaUNet_l-kf1 loaded successfully!
-model ViolaUNet_l-kf2 loaded successfully!
-model ViolaUNet_l-kf3 loaded successfully!
-model ViolaUNet_l-kf4 loaded successfully!
+model nnUNet loaded successfully!
+model Viola_s loaded successfully!
 
-------------------start predicting input volume: 001.nii.gz - 1/130 -------------------
-Predicted lesion volume : 0.178 ml
-001.nii.gz
---------Cost time: 10.901 sec --------
+---------------start predicting input file: 002.nii.gz - 1/2 ----------------
+Predicted lesion volume : 6.282 ml
+Segmention was saved to file: 002.nii.gz
+Cost time: 2.269 sec
 
-------------------start predicting input volume: 002.nii.gz - 2/130 -------------------
-Predicted lesion volume : 6.677 ml
-002.nii.gz
---------Cost time: 6.153 sec --------
+---------------start predicting input file: 003.nii.gz - 2/2 ----------------
+Predicted lesion volume : 0.428 ml
+Segmention was saved to file: 003.nii.gz
+Cost time: 2.335 sec
 
-------------------start predicting input volume: 003.nii.gz - 3/130 -------------------
-
-
+-------------------------Completed--------------------------------------------------
+Predictions infor is saved to predictions_info.csv
 ```
 
 
@@ -55,8 +46,8 @@ Predicted lesion volume : 6.677 ml
 ```
 6. What if only having CPU and Windows OS, you can Run the inference as following: 
 ```
-docker load -i crainet.tar.gz
-docker run --name crainetx -v D:\data\CT\test\input\:/input -v D:\data\CT\test\predict\:/predict crainet:latest
+docker load -i viola_v2.tar.gz
+docker run --name viola -v D:\data\CT\test\input\:/input -v D:\data\CT\test\predict\:/predict viola_v2:latest
 ```
 just replace ```D:\data\CT\test\input\``` and ```D:\data\CT\test\predict\``` with your own folder path. 
 
