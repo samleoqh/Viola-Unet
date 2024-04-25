@@ -38,7 +38,7 @@ Predictions infor is saved to predictions_info.csv
 ## Running Inference on CPU and Windows OS
 1. Load the Docker image:
 ```
-docker run --name viola -v D:\data\CT\test\input\:/input -v D:\data\CT\test\predict\:/predict viola_v2:latest
+docker load -i viola_v2.tar.gz
 ```
 2. Run the inference with the following command:
 ```
