@@ -1,18 +1,23 @@
-# Viola-Unet
-A description of the winning solution: [Viola-Unet](https://arxiv.org/abs/2208.06313) for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/))
+# Viola-Unet V2
+[Viola-Unet](https://arxiv.org/abs/2208.06313) is the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/)). It’s a powerful AI model designed for segmenting intracranial hemorrhages (ICH) in head CT scans. We retrained the model with more data and released Vioal-Unet version 2 (viola_v2) for academical users. 
 ---
 <img align="top" src="demo/125_0.923.gif" width="400"/> <img align="top" src="demo/105_0.881.gif" width="400"/>
 
-## Test the pre-trained models in docker
-1. Download the docker image [viola_v2.tar.gz](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy)
-2. Prepare your input folder such as ```/home/yourname/Desktop/input``` (a folder contains all CT files for testing) will be synchronized with ```/input``` in the docker container, and output folder such as 
-```/home/yourname/Desktop/predict``` (an empty folder used to save segmentation file) will be synchronized with ```/predict``` in the docker container. Note that, the filename of the segmentation mask file (```./predict```) is the same as the CT file (```./input```), the segmentation mask is a 3D zero-one array(0 stands for background, 1 stands for target), and the meta information of the segmentation mask file is consistent with that of original CT file (```*.nii.gz```). 
-3. Run the program with commands as follows (assuming on Linux OS) with outputing inference messages to stdout（```-e PYTHONUNBUFFERED=1```）
+## Test Pre-Trained Models in Docker
+1. Download the pre-built Docker image: [viola_v2.tar.gz](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy)
+2. Prepare your input folder containing all CT files for test (e.g., ```/home/yourname/Desktop/input```) 
+3. Create an empty output folder (e.g., ```/home/yourname/Desktop/predict```) 
+4. Run the program with the following commands (assuming you're on Linux OS):
 ```
 docker load < viola_v2.tar.gz
 docker run --gpus "device=0" --name viola -e PYTHONUNBUFFERED=1 -v /home/yourname/Desktop/input:/input -v /home/yourname/Desktop/predict:/predict viola_v2:latest
 ```
-4. The program will do following: first, read each CT file(```*.nii.gz```) in folder ```./input```, then, use pre-trained models (ensemble of viola-Unet and nnU-Net) to segment the CT scans one by one and save the segmented masks to ```./predict```, and output inference messages to terminal like: 
+The program will: 
+1. Read each CT file (```*.nii.gz``` or ```*.nii``` in the input folder.
+2. Use pre-trained models (ensemble of Viola_Unet and nnU-Net) to segment possible ICH from the CT scans.
+3. Save the segmented masks to the output folder (with exactly the same name as input file)
+4. Output inference messages to the terminal and save all messages to ```prediction_info.csv```.
+Example inference message:
 ```
 model nnUNet loaded successfully!
 model Viola_s loaded successfully!
@@ -30,26 +35,30 @@ Cost time: 2.335 sec
 -------------------------Completed--------------------------------------------------
 Predictions infor is saved to predictions_info.csv
 ```
-
-
-5. The structrue of the input and output folder for testing :
+## Running Inference on CPU and Windows OS
+1. Load the Docker image:
 ```
-├── /home/yourname/Desktop/input
-          │   ├── 144.nii.gz
-          │   ├── 145.nii.gz
-          │   ├── 146.nii.gz
-
-├── /home/yourname/Desktop/predict
-          │   ├── 144.nii.gz
-          │   ├── 145.nii.gz
-          │   ├── 146.nii.gz
-```
-6. What if only having CPU and Windows OS, you can Run the inference as following: 
-```
-docker load -i viola_v2.tar.gz
 docker run --name viola -v D:\data\CT\test\input\:/input -v D:\data\CT\test\predict\:/predict viola_v2:latest
 ```
-just replace ```D:\data\CT\test\input\``` and ```D:\data\CT\test\predict\``` with your own folder path. 
+2. Run the inference with the following command:
+```
+docker run --name viola -v D:\data\CT\test\input\:/input -v D:\data\CT\test\predict\:/predict viola_v2:latest
+```
+
+### Folder Structure:
+```
+├── /home/yourname/Desktop/input
+          ├── 144.nii.gz
+          ├── 145.nii.gz
+          ├── 146.nii.gz
+
+├── /home/yourname/Desktop/predict
+          ├── 144.nii.gz
+          ├── 145.nii.gz
+          ├── 146.nii.gz
+          ├── predictions_info.csv
+          
+```
 
 ## Citation: 
 Please consider citing [our work](https://arxiv.org/abs/2208.06313) if you find the code helps you
