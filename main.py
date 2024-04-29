@@ -75,8 +75,8 @@ if __name__ == '__main__':
             else:
                 num_pred = len(pred_outputs)
                 voting_p = 0
-                for i, p in enumerate(pred_outputs):
-                    if i != num_pred-1:
+                for j, p in enumerate(pred_outputs):
+                    if j != num_pred-1:
                         d_copy = d.copy()
                         d_copy["pred"] = p # torch.stack(pred_outputs, dim=0).squeeze(1
                         d_copy = [post_process(img) for img in decollate_batch(d_copy)]
