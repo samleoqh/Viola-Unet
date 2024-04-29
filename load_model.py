@@ -133,7 +133,7 @@ def nibout(segmentation, outputpath, imagepath):
     sfrom = image.get_sform()
     segmentation.set_sform(sfrom)
     nib.save(segmentation, os.path.join(outputpath, filename))
-    print('Segmention was saved to file:', filename)
+    print('Segmentation was saved to the file:', filename)
 
 
 # import time

@@ -29,7 +29,7 @@ Cost time: 2.269 sec
 
 ---------------start predicting input file: 003.nii.gz - 2/2 ----------------
 Predicted lesion volume : 0.428 ml
-Segmention was saved to file: 003.nii.gz
+Segmentation was saved to the file: 003.nii.gz
 Cost time: 2.335 sec
 
 -------------------------Completed--------------------------------------------------
