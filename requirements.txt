@@ -3,3 +3,7 @@ monai==1.0.1
 nibabel
 numpy
 pandas
+grad-cam
+matplotlib
+scikit-image
+opencv-python-headless

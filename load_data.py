@@ -55,6 +55,35 @@ post_process = Compose([
 ])
 
 
+# pre_process for detector models
+pre_process_cls = Compose(
+    [
+        LoadImaged(keys=["image"]),
+        EnsureChannelFirstd(keys=["image"]),
+        CopyItemsd(keys=["image"], times=2, names=["img_2", "img_3"]),
+        ScaleIntensityRanged(
+            keys=["image"], a_min=wind_levels[0][0], a_max=wind_levels[0][1],
+            b_min=0.0, b_max=1.0, clip=True,
+        ),
+        ScaleIntensityRanged(
+            keys=["img_2"], a_min=wind_levels[1][0], a_max=wind_levels[1][1],
+            b_min=0.0, b_max=1.0, clip=True,
+        ),
+        ScaleIntensityRanged(
+            keys=["img_3"], a_min=wind_levels[2][0], a_max=wind_levels[2][1],
+            b_min=0.0, b_max=1.0, clip=True,
+        ),
+        ConcatItemsd(['image', 'img_2', 'img_3'], name='image'),
+        DeleteItemsd(['img_2', 'img_3']),
+
+        Spacingd(keys=["image"], pixdim=[1., 1., 3.], mode=("bilinear")),
+        CropForegroundd(keys=["image"], source_key="image"),
+        Orientationd(keys=["image"], axcodes="PRI"),  # here is the diff with segmentation pre-process
+        ToTensord(keys=["image"]),
+    ]
+)
+
+
 # reading raw head information from input scans
 read_raw_image = Compose(
     [
