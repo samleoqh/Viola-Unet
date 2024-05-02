@@ -1,8 +1,7 @@
 import os
 import numpy as np
-import cv2
 import matplotlib.pyplot as plt
-
+from skimage.transform import resize
 
 def norm(img, mean=(0.456, 0.456, 0.456), std=(0.224, 0.224, 0.224), max_pixel_value=255.0):
     img = cropping(img)
@@ -22,7 +21,10 @@ def norm(img, mean=(0.456, 0.456, 0.456), std=(0.224, 0.224, 0.224), max_pixel_v
 
 def cropping(image, ratio=0.85, size=(256, 256)):
     height, width, _ = image.shape
-    locations = cv2.findNonZero(image[:, :, 2])
+    # locations = cv2.findNonZero(image[:, :, 2])
+    locations = np.argwhere(image[:, :, 2])
+    locations[:, [0, 1]] = locations[:, [1, 0]]
+    locations = np.expand_dims(locations, axis=1)
 
     if locations is not None:
         top_left = locations.min(axis=0)[0]
@@ -53,7 +55,7 @@ def cropping(image, ratio=0.85, size=(256, 256)):
 
         zeros = image[start_y:start_y + target_h, start_x:start_x + target_w, :]
     # zeros = cv2.resize(zeros, (width,height))
-    zeros = cv2.resize(zeros, size)
+    zeros = resize(zeros, size)
     return zeros
 
 

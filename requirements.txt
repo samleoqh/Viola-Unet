@@ -4,6 +4,5 @@ nibabel
 numpy
 pandas
 grad-cam
-opencv-python
 matplotlib
 scikit-image
