@@ -6,3 +6,4 @@ pandas
 grad-cam
 matplotlib
 scikit-image
+opencv-python-headless
