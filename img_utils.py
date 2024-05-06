@@ -35,13 +35,13 @@ def cropping(image, ratio=0.85, size=(256, 256)):
 
         target_h = int(height * 0.9)
         target_w = int(width * 0.8)
-        if target_w > crop_width: target_w = crop_width
-        if target_h > crop_height: target_h = crop_height
+        if target_w > crop_width: target_w = crop_width + 1 
+        if target_h > crop_height: target_h = crop_height + 1
 
         start_x = (width - target_w) // 2
-        if start_x < crop_x: start_x = crop_x
+        if start_x < crop_x: start_x = crop_x - 1
         start_y = (height - target_h) // 2
-        if start_y < crop_y: start_y = crop_y
+        if start_y < crop_y: start_y = crop_y - 1
         # zeros = image[crop_y:crop_y + crop_height, crop_x:crop_x + crop_width, :]
         # zeros = image[crop_y:crop_y + target_h, start_x:start_x+target_w, :]
         zeros = image[start_y:start_y + target_h, start_x:start_x + target_w, :]
