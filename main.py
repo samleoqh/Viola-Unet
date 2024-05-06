@@ -38,13 +38,16 @@ if __name__ == '__main__':
 
     test_file_list, dataloader = load_data(args.input_dir)
 
-    out_file_name = "predictions_info.csv"
-    filenames, pred_volums, infer_time = [], [], []
-    any_ich, edh, iph, ivh, sah, sdh = [], [], [], [], [], []
+    # out_file_name = "predictions_info.csv"
+    csv_file = os.path.join(args.predict_dir, "predictions_info.csv")
      
     with torch.no_grad():
         num_scans = len(dataloader)
         for i, d in enumerate(dataloader):
+
+            filenames, pred_volums, infer_time = [], [], []
+            any_ich, edh, iph, ivh, sah, sdh = [], [], [], [], [], []
+            
             path, filename = os.path.split(test_file_list[i]['image'])
             filenames.append(filename)
             
@@ -133,11 +136,23 @@ if __name__ == '__main__':
                 )
             infer_time.append(time.time() - start_time)
             print('Cost time: {:.3f} sec'.format(time.time() - start_time))
+
+            if os.path.isfile(csv_file):
+                pred_csv = pd.read_csv(csv_file)
+            else:
+                pred_csv = pd.DataFrame(columns = ['Filename', 'Pre_volume',
+                                                   'any_ICH', 'EDH', 'IPH', 'IVH', 'SAH', 'SDH',
+                                                   "Infer_time"]
+                                        )
             
-        df = pd.DataFrame({'Filename': filenames, 'Pre_volume': pred_volums,
-                           'any_ICH': any_ich, 'EDH': edh, 'IPH': iph, 'IVH': ivh, 'SAH':sah, 'SDH': sdh,
-                           "Infer_time": infer_time})
-        df_rounded = df.round(3)
-        df_rounded.to_csv(os.path.join(args.predict_dir, out_file_name), index=False)
+            df = pd.DataFrame({'Filename': filenames, 'Pre_volume': pred_volums,
+                               'any_ICH': any_ich, 'EDH': edh, 'IPH': iph, 'IVH': ivh, 'SAH':sah, 'SDH': sdh,
+                               "Infer_time": infer_time})
+            df_rounded = df.round(3)
+            updated_df = pd.concat([pred_csv, df_rounded], ignore_index=True)
+
+            # Write the updated DataFrame back to the CSV file
+            updated_df.to_csv(csv_file, index=False)
+            
         print("\n-------------------------Completed--------------------------------------------------")
-        print("Predictions infor is saved to", out_file_name)
+        print("Predictions infor is saved to", csv_file)
