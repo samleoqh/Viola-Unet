@@ -43,7 +43,7 @@ if __name__ == '__main__':
      
     with torch.no_grad():
         num_scans = len(dataloader)
-        print('-------There are total "{0}" CT scans found in the input folder} -----'.format(num_scans))
+        print('\n-------There are total "{0}" CT scans found in the input folder -----'.format(num_scans))
         for i, d in enumerate(dataloader):
 
             filenames, pred_volums, infer_time = [], [], []
@@ -71,7 +71,7 @@ if __name__ == '__main__':
             ivh.append(pred_dict['IVH'])
             sah.append(pred_dict['SAH'])
             sdh.append(pred_dict['SDH'])
-            print("Detected ICH-type (num of slices):", pred_dict)
+            print("Detected ICH-type (num of slices):\n", pred_dict)
             if idx_vis!= -1:
                 visualize_cam(visual_imgs=visual_imgs, patient=filename, n_slice=idx_vis, path=args.predict_dir)
 
