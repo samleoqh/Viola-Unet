@@ -17,8 +17,8 @@ pre_trained_models = {
         'f0':'./best_ckpt2/densenet121_f0.pth',
         # 'f1':'./best_ckpt2/densenet121_f1.pth',
         'f2':'./best_ckpt2/densenet121_f2.pth',
-        # 'f3':'./best_ckpt2/densenet121_f3.pth',
-        'f4':'./best_ckpt2/densenet121_f4.pth',
+        'f3':'./best_ckpt2/densenet121_f3.pth',
+        # 'f4':'./best_ckpt2/densenet121_f4.pth',
     }
 }
 

@@ -34,7 +34,7 @@ def cropping(image, ratio=0.85, size=(256, 256)):
         crop_width, crop_height = bottom_right[0] - top_left[0], bottom_right[1] - top_left[1]
 
         target_h = int(height * 0.9)
-        target_w = int(width * 0.8)
+        target_w = int(width * 0.85)
         if target_w > crop_width: target_w = crop_width + 1 
         if target_h > crop_height: target_h = crop_height + 1
 
