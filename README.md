@@ -4,7 +4,7 @@
 <img align="top" src="demo/125_0.923.gif" width="400"/> <img align="top" src="demo/105_0.881.gif" width="400"/>
 
 ## Test Pre-Trained Models in Docker
-1. Download the pre-built Docker image: [viola_v2.tar.gz](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy)
+1. Download the pre-built Docker image: [viola_v2.tar.gz](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy).
 2. Prepare your input folder containing all CT files for test (e.g., ```/home/yourname/Desktop/input```) 
 3. Create an empty output folder (e.g., ```/home/yourname/Desktop/predict```) 
 4. Run the program with the following commands (assuming you're on Linux OS):
