@@ -2,9 +2,10 @@
 [Viola-Unet](https://arxiv.org/abs/2208.06313) is the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/)). It’s a powerful AI model designed for segmenting intracranial hemorrhages (ICH) in head CT scans. We retrained the model with more data and released Vioal-Unet version 2 (viola_v2) for academic users. 
 
 ## Test our model with a new GUI application on Windows OS.
-1. Download  [CPU-version](https://drive.google.com/file/d/1bGcyV0Ip84nEfHKZXe7xM5tli3zh-P1N/view?usp=drive_link) (```0.25 GB```) or [GPU-version](https://drive.google.com/file/d/1Ne0WWh9O7WFideG23An2hMxNhjJI2hlX/view?usp=drive_link) (```2.5 GB```) of the single executive file based on if you have a GPU on your computer.
-3. Double-click it, ```RUN it anyway``` and then you can use it easily.
-4. Delete it if you don't want to use it anymore. 
+1. Download [Viola-GUI-version](https://drive.google.com/file/d/1PpjRQRFj26IrFzjr4h5JgGTqan724nym/view?usp=drive_link) (```2. GB```) of one single executive file. 
+2. Double-click it, ```RUN anyway```, wait a bit for its initialization, and then you can use it easily.
+3. It works on both GPU and non-GPU OS, if any issues, feel free to contact me. 
+4. Delete it simply if you don't want to use it anymore. 
    
 ---
 <img align="top" src="demo/125_0.923.gif" width="400"/> <img align="top" src="demo/105_0.881.gif" width="400"/>
