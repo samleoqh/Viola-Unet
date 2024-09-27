@@ -1,16 +1,17 @@
 # Viola-Unet V2
-[Viola-Unet](https://arxiv.org/abs/2208.06313) is the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/)). It’s a powerful AI model designed for segmenting intracranial hemorrhages (ICH) in head CT scans. We retrained the model with more data and released Vioal-Unet version 2 (viola_v2) for academical users. 
+[Viola-Unet](https://arxiv.org/abs/2208.06313) is the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/)). It’s a powerful AI model designed for segmenting intracranial hemorrhages (ICH) in head CT scans. We retrained the model with more data and released Vioal-Unet version 2 (viola_v2) for academic users. 
 
 ## Test our model with a new GUI version for CPU on Windows OS.
-1. Download the executive file [viola-GUI](https://drive.google.com/file/d/1JonL_bkkAEaCndWBv5xhw_kMxfM7rSZv/view?usp=drive_link) to any folder on your Windows PC.
+1. Download the executive file [Viola-ICH-AI](https://drive.google.com/file/d/1bGcyV0Ip84nEfHKZXe7xM5tli3zh-P1N/view?usp=drive_link) to your Windows PC.
 2. Double-click it and then you can use it easily.
+3. Delete it if you don't want to use it anymore. 
    
 ---
 <img align="top" src="demo/125_0.923.gif" width="400"/> <img align="top" src="demo/105_0.881.gif" width="400"/>
 
 
 ## Test Pre-Trained Models in Docker
-1. Download the pre-built Docker image: [viola_v2.tar.gz](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy).
+1. Download the pre-built Docker image: [viola_v2.tar.gz](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy). 
 2. Prepare your input folder containing all CT files for test (e.g., ```/home/yourname/Desktop/input```) 
 3. Create an empty output folder (e.g., ```/home/yourname/Desktop/predict```) 
 4. Run the program with the following commands (assuming you're on Linux OS):
