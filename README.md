@@ -6,7 +6,12 @@
 2. Double-click it, ```RUN anyway```, wait a bit for its initialization, and then you can use it easily.
 3. It works on both GPU and non-GPU OS, if any issues, feel free to contact me. 
 4. Delete it simply if you don't want to use it anymore. 
-   
+
+
+
+https://github.com/user-attachments/assets/81a278b1-40fb-4591-9094-1c5385ad065b
+
+
 ---
 <img align="top" src="demo/125_0.923.gif" width="400"/> <img align="top" src="demo/105_0.881.gif" width="400"/>
 
