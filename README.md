@@ -1,27 +1,43 @@
-# Viola-Unet V2
-[Viola-Unet](https://arxiv.org/abs/2208.06313) is the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/)). It’s a powerful AI model designed for segmenting intracranial hemorrhages (ICH) in head CT scans. We retrained the model with more data and released Vioal-Unet version 2 (viola_v2) for academic users. 
+# Viola-Unet V3.1
+[Viola-Unet](https://arxiv.org/abs/2208.06313) is the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/)). 
+This powerful AI model is designed for automated segmentation of intracranial hemorrhages (ICH) in head CT scans. In this release, we retrained Viola-Unet with additional data and enhanced the architecture for improved multi-class segmentation performance.
+We are excited to release Viola-Unet v3.1, our latest multi-class model, now available to academic users for non-commercial research and development.
 
-## Test our model with a new GUI application on Windows OS.
-1. Download [Viola-GUI-version](https://drive.google.com/file/d/1SyI1oz0wBHABSAym0zKy347Ao4RA8mJn/view?usp=sharing)(```2.6 GB```) of one single executive file. 
-2. Double-click it, ```RUN anyway```, wait a bit for its initialization, and then you can use it easily.
-3. It works on both GPU and non-GPU OS, if any issues, feel free to contact me. 
-4. Delete it simply if you don't want to use it anymore. 
+## 🖥️ Try Our Latest Model with a New GUI (Windows & macOS)
 
+### ▶️ Download & Run Viola-GUI v3.1
+1. **Download** the all-in-one standalone app:  
+   🔗 [Viola-GUI Version 3.1](https://www.youtube.com/watch?v=Y6lVQpNrHCk) (`~2.9 GB`)
+2. **Double-click** the downloaded `.exe` (Windows) or `.app` (macOS).  
+   If prompted by the system, choose **“Run anyway”** or **“Open”**.
+3. **Wait briefly** for initialization — the app will launch automatically.
+4. Works on both **GPU-enabled** and **non-GPU systems**.
+5. No installation needed. To uninstall, simply delete the file.
 
-
-https://github.com/user-attachments/assets/81a278b1-40fb-4591-9094-1c5385ad065b
-
+> 🛟 For questions or issues, feel free to [contact us](mailto:samleoqh@gmail.com).
 
 ---
-<img align="top" src="demo/125_0.923.gif" width="400"/> <img align="top" src="demo/105_0.881.gif" width="400"/>
 
+<p align="center">
+  <img src="demo/viola_multi_class_test_demo.gif" width="600"/>
+  <img src="demo/neomedsys_auc_online.png" width="315"/>
+</p>
 
-## Test Pre-Trained Models in Docker
-1. Download the pre-built Docker image: [viola_v2.tar.gz](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy). 
-2. Prepare your input folder containing all CT files for test (e.g., ```/home/yourname/Desktop/input```) 
-3. Create an empty output folder (e.g., ```/home/yourname/Desktop/predict```) 
-4. Run the program with the following commands (assuming you're on Linux OS):
-```
+---
+
+## 🧪 Run Pretrained Models (v2) in Docker *(v3.1 Docker coming soon)*
+
+### 🔽 1. Download Docker Image
+- [viola_v2.tar.gz (Docker Image)](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy)
+
+### 🗂️ 2. Prepare Input/Output Folders
+- **Input folder**: Place CT scans for testing  
+  Example: `/home/yourname/Desktop/input`
+- **Output folder**: Create an empty folder for results  
+  Example: `/home/yourname/Desktop/predict`
+
+### 🐳 3. Run via Terminal (Linux)
+```bash
 docker load < viola_v2.tar.gz
 docker run --gpus "device=0" --name viola -e PYTHONUNBUFFERED=1 -v /home/yourname/Desktop/input:/input -v /home/yourname/Desktop/predict:/predict viola_v2:latest
 ```
@@ -83,4 +99,35 @@ Please consider citing [our work](https://arxiv.org/abs/2208.06313) if you find 
   booktitle={Proceedings of ISBI 2023 IEEE 20th International Symposium on Biomedical Imaging (ISBI)},
   year={2023}
 }
+
+@article{macintosh2023radiological,
+  title={Radiological features of brain hemorrhage through automated segmentation from computed tomography in stroke and traumatic brain injury},
+  author={MacIntosh, Bradley J and Liu, Qinghui and Schellhorn, Till and Beyer, Mona K and Groote, Inge Rasmus and Morberg, P{\aa}l C and Poulin, Joshua M and Selseth, Maiken N and Bakke, Ragnhild C and Naqvi, Aina and others},
+  journal={Frontiers in Neurology},
+  volume={14},
+  pages={1244672},
+  year={2023},
+  publisher={Frontiers Media SA}
+}
+
+@article{liu2025examining,
+  title={Examining Deployment and Refinement of the VIOLA-AI Intracranial Hemorrhage Model Using an Interactive NeoMedSys Platform},
+  author={Liu, Qinghui and Nesvold, Jon and Raaum, Hanna and Murugesu, Elakkyen and R{\o}vang, Martin and Maclntosh, Bradley J and Bj{\o}rnerud, Atle and Skogen, Karoline},
+  journal={arXiv preprint arXiv:2505.09380},
+  year={2025}
+}
 ```
+---
+
+## 🙏 Acknowledgements
+
+We would like to thank the following contributors and resources that made this project possible:
+
+- **[INSTANCE Challenge 2022](https://instance.grand-challenge.org/)**: For providing the Intracranial Hemorrhage Segmentation dataset used to train and evaluate our models.
+- **[BHSD Dataset](https://github.com/White65534/BHSD)**: For providing additional annotated data that helped improve model generalization.
+- **[nnU-Net Framework](https://github.com/MIC-DKFZ/nnUNet)**: For providing a robust baseline and automation framework for medical image segmentation.
+- **[MONAI (Medical Open Network for AI)](https://monai.io/)**: For offering powerful tools and utilities for deep learning in medical imaging.
+
+Special thanks to the open-source community for their continuous contributions to medical AI research.
+
+---
