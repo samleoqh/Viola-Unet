@@ -7,18 +7,21 @@ We are excited to release Viola-Unet v3.1, our latest multi-class model, now ava
 
 ### ▶️ Download & Run Viola-GUI v3.1
 1. **Download** the all-in-one standalone app:  
-   🔗 [Viola-GUI Version 3.1](https://www.youtube.com/watch?v=Y6lVQpNrHCk) (`~2.9 GB`)
+   🔗 [Viola-GUI Version 3.1](https://www.youtube.com/watch?v=Y6lVQpNrHCk) (`~2.9 GB` for [Windows](https://e.pcloud.link/publink/show?code=XZCrStZ2cViUi6FSNzJsLDOy1W3XmaVaIFk), `~0.5 GB` for [macOS](https://e.pcloud.link/publink/show?code=XZxrStZ987f4mhOu6VIxtiaxxK7xzfYkhpV))
 2. **Double-click** the downloaded `.exe` (Windows) or `.app` (macOS).  
-   If prompted by the system, choose **“Run anyway”** or **“Open”**.
+   If prompted by the system, choose **“Run anyway”** or Go to `System Settings - Privacy and Security`, at the bottom, click `"Open Anyway"`.
 3. **Wait briefly** for initialization — the app will launch automatically.
 4. Works on both **GPU-enabled** and **non-GPU systems**.
 5. No installation needed. To uninstall, simply delete the file.
+
+https://github.com/user-attachments/assets/af16a489-703d-45fa-90ca-269f97e2c0f1
+
 
 > 🛟 For questions or issues, feel free to [contact us](mailto:samleoqh@gmail.com).
 
 ---
 
-<p align="center">
+<p align="left">
   <img src="demo/viola_multi_class_test_demo.gif" width="600"/>
   <img src="demo/neomedsys_auc_online.png" width="315"/>
 </p>
@@ -118,6 +121,7 @@ Please consider citing [our work](https://arxiv.org/abs/2208.06313) if you find 
 }
 ```
 ---
+
 
 ## 🙏 Acknowledgements
 
