@@ -1,7 +1,41 @@
-# Viola-Unet V3.1
-[Viola-Unet](https://arxiv.org/abs/2208.06313) is the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/)). 
-This powerful AI model is designed for automated segmentation of intracranial hemorrhages (ICH) in head CT scans. In this release, we retrained Viola-Unet with additional data and enhanced the architecture for improved multi-class segmentation performance.
-We are excited to release Viola-Unet v3.1, our latest multi-class model, now available to academic users for non-commercial research and development.
+# Violai V3.1
+[Viola-Unet](https://arxiv.org/abs/2208.06313) is the winning solution for the validation dataset in the 2022 Intracranial Hemorrhage Segmentation challenge ([INSTANCE 2022](https://instance.grand-challenge.org/)). It is a state-of-the-art deep learning model designed for automated segmentation of intracranial hemorrhage (ICH) on head CT scans.
+
+Violai v3.1 builds on this foundation with:
+- Retrained Viola-Unet models using an expanded and more diverse dataset
+- Architecture enhancements for improved multi-class ICH segmentation
+- A production-ready environment for research, experimentation, and clinical-workflow prototyping
+
+This release is available to academic users for non-commercial research and development.
+
+Violai v3.1 provides pre-trained ViolaNet models capable of comprehensive ICH analysis, including subtype classification across EDH, SDH, SAH, IPH, and IVH. The system uses an ensemble of five specialized 3D convolutional neural networks, each trained on heterogeneous medical imaging cohorts, to deliver robust hemorrhage detection and high-fidelity volumetric analysis.
+
+## Key Features
+- 🧠 **Multi-model Ensemble**: 5 pre-trained ViolaNet variants for comprehensive ICH analysis
+- 🩺 **Subtype Classification**: Differentiates between 5 ICH subtypes with volumetric measurements
+- 📊 **Detailed Metrics**: Outputs probability scores, volumetric measurements (ml), and segmentation masks
+- 🖥️ **Hardware Optimized**: Automatic detection and utilization of CUDA, MPS (Apple Silicon), or CPU
+- 🐳 **Containerized**: Ready-to-use Docker image with all dependencies pre-installed
+- 📈 **Batch Processing**: Efficient processing of large NIfTI datasets with configurable batch sizes
+- 🔄 **Memory Efficient**: Aggressive memory management for stable long-running inference
+
+## Medical Context
+Intracranial hemorrhage (ICH) refers to bleeding within the skull. This tool detects and classifies:
+- **EDH**: Epidural hematoma (between skull and dura)
+- **SDH**: Subdural hematoma (between dura and arachnoid)
+- **SAH**: Subarachnoid hemorrhage (between arachnoid and pia)
+- **IPH**: Intraparenchymal hemorrhage (within brain tissue)
+- **IVH**: Intraventricular hemorrhage (within brain ventricles)
+
+## Models Overview
+
+| Model | Architecture | Input Channels | Classes | Purpose |
+|-------|--------------|----------------|---------|---------|
+| model1 | DynUNet (ViolaUNet) | 3 | 2 | Base ICH detection |
+| model2 | PlainViolaConvUNet | 1 | 2 | Specialized hemorrhage detection |
+| model3 | ResidualEncoderUNet | 1 | 6 | Multi-class subtype segmentation |
+| model4 | PlainViolaConvUNet | 3 | 2 | RL-enhanced variant 0 |
+| model5 | PlainViolaConvUNet | 3 | 2 | RL-enhanced variant 1 |
 
 ## 🖥️ Try Our Latest Model with a New GUI (Windows & macOS)
 
@@ -28,10 +62,10 @@ https://github.com/user-attachments/assets/af16a489-703d-45fa-90ca-269f97e2c0f1
 
 ---
 
-## 🧪 Run Pretrained Models (v2) in Docker *(v3.1 Docker coming soon)*
+## 🧪 Run Violai v3.1 in Docker
 
 ### 🔽 1. Download Docker Image
-- [viola_v2.tar.gz (Docker Image)](https://e.pcloud.link/publink/show?code=XZID5MZvtia7EGYQypb0JDLiVu71p4kK4vy)
+- [violai-3-1.tar.gz (Docker Image)](https://e.pcloud.link/publink/show?code=XZKnUAZc8peY7pY16jtikDqqmIR6uzaOmI7)
 
 ### 🗂️ 2. Prepare Input/Output Folders
 - **Input folder**: Place CT scans for testing  
@@ -41,57 +75,50 @@ https://github.com/user-attachments/assets/af16a489-703d-45fa-90ca-269f97e2c0f1
 
 ### 🐳 3. Run via Terminal (Linux)
 ```bash
-docker load < viola_v2.tar.gz
-docker run --gpus "device=0" --name viola -e PYTHONUNBUFFERED=1 -v /home/yourname/Desktop/input:/input -v /home/yourname/Desktop/predict:/predict viola_v2:latest
+docker load < violai-3-1.tar.gz
+docker run --gpus "device=0" --name violai -e PYTHONUNBUFFERED=1 -v /home/yourname/Desktop/input:/input -v /home/yourname/Desktop/predict:/predict violai:3.1
 ```
 The program will: 
 1. Read each CT file (```*.nii.gz``` or ```*.nii``` in the input folder.
-2. Use pre-trained models (ensemble of Viola_Unet and nnU-Net) to segment possible ICH from the CT scans.
+2. Use pre-trained 5 models to segment 5 ICH subtypes (```EDH:1, SDH:2, SAH:3, IPH:4, IVH:5```) from the CT scans.
 3. Save the segmented masks to the output folder (with exactly the same name as input file)
-4. Output inference messages to the terminal and save all messages to ```prediction_info.csv```.
-Example inference message:
-```
-model nnUNet loaded successfully!
-model Viola_s loaded successfully!
+4. Output detailed volumetric analysis, class probabilities and predicted labels to ```predictions_viola3-1.csv```.
 
----------------start predicting input file: 002.nii.gz - 1/2 ----------------
-Predicted lesion volume : 6.282 ml
-Segmention was saved to file: 002.nii.gz
-Cost time: 2.269 sec
-
----------------start predicting input file: 003.nii.gz - 2/2 ----------------
-Predicted lesion volume : 0.428 ml
-Segmentation was saved to the file: 003.nii.gz
-Cost time: 2.335 sec
-
--------------------------Completed--------------------------------------------------
-Predictions infor is saved to predictions_info.csv
-```
 ## Running Inference on CPU and Windows OS
 1. Load the Docker image:
 ```
-docker load -i viola_v2.tar.gz
+docker load -i violai-3-1.tar.gz
 ```
 2. Run the inference with the following command:
 ```
-docker run --name viola -v D:\data\CT\test\input\:/input -v D:\data\CT\test\predict\:/predict viola_v2:latest
+docker run --name violai -v D:\data\CT\test\input\:/input -v D:\data\CT\test\predict\:/predict violai:3.1
 ```
 
-### Folder Structure:
+### Output Folder Structure:
 ```
 ├── /home/yourname/Desktop/input
-          ├── 144.nii.gz
-          ├── 145.nii.gz
-          ├── 146.nii.gz
+   ├── case1.nii.gz
+   ├── case2.nii.gz
+   └── ...
 
-├── /home/yourname/Desktop/predict
-          ├── 144.nii.gz
-          ├── 145.nii.gz
-          ├── 146.nii.gz
-          ├── predictions_info.csv
+├── /home/yourname/Desktop/predict/predictions_violai_3_1_YYYY-MM-DD-HH-MM-SS/
+   ├── predictions_viola3-1.csv          # Comprehensive results CSV
+   ├── case1.nii.gz                      # Segmentation mask, the filenames same as the inputs
+   ├── case2.nii.gz
+   └── ...
           
 ```
 
+### CSV Output Format
+The CSV file contains the following columns:
+- `File_Name`: Original NIfTI filename
+- `Pixdim_max`: Maximum pixel dimension (mm)
+- `Prob_1ml_bleed`: Probability of ≥1ml hemorrhage
+- `Prob_any_ICH`: Probability of any ICH present
+- `Prob_EDH`, `Prob_SDH`, `Prob_SAH`, `Prob_IPH`, `Prob_IVH`: Subtype probabilities
+- `EDH_volume`, `SDH_volume`, `SAH_volume`, `IPH_volume`, `IVH_volume`: Subtype volumes (ml)
+- `Total_volume`: Total hemorrhage volume (ml)
+- `Pred_labels`: Detected label indices (0=background, 1-5=ICH subtypes)
 ## Citation: 
 Please consider citing [our work](https://arxiv.org/abs/2208.06313) if you find the code helps you
 
