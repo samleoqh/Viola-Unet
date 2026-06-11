@@ -6,7 +6,14 @@ Violai v3.1 builds on this foundation with:
 - Architecture enhancements for improved multi-class ICH segmentation
 - A production-ready environment for research, experimentation, and clinical-workflow prototyping
 
-This release is available to academic users for non-commercial research and development.
+## ⚖️ Licensing
+
+This project uses **dual licensing** to respect the open-source dependencies and the non-commercial dataset agreements:
+
+| Component | License | Permitted Use |
+|-----------|---------|---------------|
+| **Source code** | [Apache 2.0](LICENSE) | Research, education, and commercial use* |
+| **Pre-trained weights & Docker images** | [CC BY-NC-ND 4.0](MODEL_LICENSE.md) | **Academic and non-commercial research only** |
 
 Violai v3.1 provides pre-trained ViolaNet models capable of comprehensive ICH analysis, including subtype classification across EDH, SDH, SAH, IPH, and IVH. The system uses an ensemble of five specialized 3D convolutional neural networks, each trained on heterogeneous medical imaging cohorts, to deliver robust hemorrhage detection and high-fidelity volumetric analysis.
 
