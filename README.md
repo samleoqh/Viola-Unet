@@ -55,7 +55,8 @@ Intracranial hemorrhage (ICH) refers to bleeding within the skull. This tool det
 4. Works on both **GPU-enabled** and **non-GPU systems**.
 5. No installation needed. To uninstall, simply delete the file.
 
-https://github.com/user-attachments/assets/af16a489-703d-45fa-90ca-269f97e2c0f1
+https://github.com/user-attachments/assets/d69a5556-da5d-4822-9b5e-9a2c007be1c6
+
 
 
 > 🛟 For questions or issues, feel free to [contact us](mailto:samleoqh@gmail.com).
